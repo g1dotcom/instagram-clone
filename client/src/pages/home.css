@@ -1,0 +1,19 @@
+.home-page {
+  margin: 88px 0;
+  display: flex;
+}
+
+.home-page .home-page-left {
+  background-color: aqua;
+  flex: 3;
+}
+.home-page .home-page-left .posts {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.home-page .home-page-right {
+  background-color: red;
+  flex: 2;
+}

@@ -30,5 +30,11 @@ button {
 .container {
   width: 975px;
   margin: auto;
-  background-color: red;
+}
+
+@media (max-width: 992px) {
+  .container {
+    width: auto;
+    padding: 0 30px;
+  }
 }
