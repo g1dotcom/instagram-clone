@@ -3,6 +3,7 @@ import "./header.css";
 
 //COMPONENTS IMPORT
 import { Logo } from "../Logo/Logo";
+import { Share } from "../share/Share";
 
 //ICONS IMPORT
 import SearchIcon from "@mui/icons-material/Search";
@@ -11,12 +12,13 @@ import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import { Avatar } from "@mui/material";
 
-export const Header = () => {
+export const Header = ({ handleOpen }) => {
   return (
     <div className="header-wrapper">
       <div className="container">
         <div className="header">
           <Logo />
+          <Share />
           <div className="search">
             <SearchIcon className="search-icon" />
             <input type="text" placeholder="Search" />
@@ -28,9 +30,9 @@ export const Header = () => {
             <a href="/">
               <ChatOutlinedIcon className="icon" />
             </a>
-            <a href="/">
-              <AddBoxOutlinedIcon className="icon" />
-            </a>
+
+            <AddBoxOutlinedIcon className="icon" onClick={handleOpen} />
+
             <a href="/">
               <Avatar
                 alt="Remy Sharp"

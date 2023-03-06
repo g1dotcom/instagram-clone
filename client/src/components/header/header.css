@@ -43,6 +43,7 @@
 .header .header-links .icon {
   display: flex;
   font-size: 28px;
+  cursor: pointer;
 }
 
 /* header search result */

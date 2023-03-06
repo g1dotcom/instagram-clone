@@ -4,7 +4,6 @@
 }
 
 .home-page .home-page-left {
-  background-color: aqua;
   flex: 3;
 }
 .home-page .home-page-left .posts {
@@ -14,6 +13,5 @@
 }
 
 .home-page .home-page-right {
-  background-color: red;
   flex: 2;
 }
