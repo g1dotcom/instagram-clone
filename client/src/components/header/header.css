@@ -43,7 +43,50 @@
 .header .header-links .icon {
   display: flex;
   font-size: 28px;
-  cursor: pointer;
 }
 
 /* header search result */
+
+.search-result-wrapper {
+  position: absolute;
+  top: 28px;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  margin-top: 8px;
+  padding: 0;
+  border-radius: 8px;
+}
+
+.search-result {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-result-link {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  padding: 6px;
+  transition: background 0.5s ease;
+}
+
+.search-result-link:hover {
+  background: #ccc;
+}
+
+.search-resul-text {
+  font-size: 12px;
+  padding: 6px;
+  font-weight: bold;
+}
+
+/* responsive */
+
+@media (max-width: 768px) {
+  .header .search {
+    display: none;
+  }
+}

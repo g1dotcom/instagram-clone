@@ -6,6 +6,7 @@
 .home-page .home-page-left {
   flex: 3;
 }
+
 .home-page .home-page-left .posts {
   display: flex;
   flex-direction: column;
@@ -14,4 +15,12 @@
 
 .home-page .home-page-right {
   flex: 2;
+}
+
+/* responsive */
+
+@media (max-width: 768px) {
+  .home-page-right {
+    display: none;
+  }
 }
