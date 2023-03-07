@@ -55,6 +55,11 @@
   margin-top: 8px;
 }
 
+.share-img {
+  max-height: 400px;
+  object-fit: cover;
+}
+
 .cancel-icon {
   position: absolute;
   top: 5px;

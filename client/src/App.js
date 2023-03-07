@@ -3,7 +3,8 @@ import { useState } from "react";
 //components and pages
 import { Header } from "./components/header/Header";
 import { Share } from "./components/share/Share";
-import { Home } from "./pages/Home";
+import { Home } from "./pages/Home/Home";
+import { Profile } from "./pages/Profile/Profile";
 
 //material-ui
 
@@ -16,7 +17,8 @@ function App() {
     <div className="App">
       <Header handleOpen={handleOpen} />
       <Share open={open} handleClose={handleClose} />
-      <Home />
+      {/*   <Home /> */}
+      <Profile />
     </div>
   );
 }

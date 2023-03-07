@@ -1,6 +1,7 @@
 import React from "react";
-import { Post } from "../components/post/Post";
-import { RightBox } from "../components/rightBox/RightBox";
+import { Post } from "../../components/post/Post";
+import { RightBox } from "../../components/rightBox/RightBox";
+
 import "./home.css";
 
 export const Home = () => {
