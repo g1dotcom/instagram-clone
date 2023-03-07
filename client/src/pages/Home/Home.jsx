@@ -10,7 +10,7 @@ export const Home = () => {
       <div className="home-page">
         <div className="home-page-left">
           <div className="posts">
-            <Post />
+            <Post top bottom />
           </div>
         </div>
         <div className="home-page-right">
