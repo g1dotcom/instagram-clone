@@ -4,8 +4,10 @@ import { useState } from "react";
 import { Header } from "./components/header/Header";
 import { Share } from "./components/share/Share";
 import { Home } from "./pages/Home/Home";
+import { Login } from "./pages/login/Login";
 import { Messenger } from "./pages/Messenger/Messenger";
 import { Profile } from "./pages/Profile/Profile";
+import { Register } from "./pages/register/Register";
 
 //material-ui
 
@@ -18,9 +20,11 @@ function App() {
     <div className="App">
       <Header handleOpen={handleOpen} />
       <Share open={open} handleClose={handleClose} />
-      {/*   <Home /> */}
-      {/*  <Profile /> */}
-      <Messenger />
+      {/*   <Home />
+      <Profile />
+      <Messenger /> */}
+      {/* <Register /> */}
+      <Login />
     </div>
   );
 }
