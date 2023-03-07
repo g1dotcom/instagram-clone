@@ -9,9 +9,9 @@ import "./login.css";
 export const Login = () => {
   return (
     <div className="auth-page">
-      <h1>Login</h1>
+      <h1>LOGIN</h1>
       <form className="form">
-        <h2>Register</h2>
+        <h2>LOGIN</h2>
 
         <div className="form-input">
           <TextField required type="email" label="Email" variant="outlined" />
