@@ -1,9 +1,13 @@
+// Description: This is the main server file
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const authRoutes = require("./routes/auth.js");
 const morgan = require("morgan");
+
+// Routes
+const authRoutes = require("./routes/auth.js");
+const userRoutes = require("./routes/users.js");
 
 const port = 5000;
 
@@ -24,6 +28,7 @@ app.use(morgan("common"));
 
 // Routes
 app.use("/auth", authRoutes);
+app.use("/users", userRoutes);
 
 app.listen(port, () => {
   connect();
