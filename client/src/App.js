@@ -9,7 +9,8 @@ import { Messenger } from "./pages/Messenger/Messenger";
 import { Profile } from "./pages/Profile/Profile";
 import { Register } from "./pages/register/Register";
 
-//material-ui
+// router
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   const [open, setOpen] = useState(false);
@@ -18,13 +19,17 @@ function App() {
 
   return (
     <div className="App">
-      <Header handleOpen={handleOpen} />
       <Share open={open} handleClose={handleClose} />
-      {/*   <Home />
-      <Profile />
-      <Messenger /> */}
-      {/* <Register /> */}
-      <Login />
+      <Router>
+        <Header handleOpen={handleOpen} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/profile/:username" element={<Profile />} />
+          <Route path="/messenger" element={<Messenger />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
