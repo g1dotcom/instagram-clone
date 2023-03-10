@@ -10,6 +10,7 @@ const authRoutes = require("./routes/auth.js");
 const userRoutes = require("./routes/users.js");
 const postRoutes = require("./routes/posts.js");
 const conversationRoutes = require("./routes/conversation.js");
+const messageRoutes = require("./routes/messages.js");
 
 const port = 5000;
 
@@ -33,6 +34,7 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/conversations", conversationRoutes);
+app.use("/messages", messageRoutes);
 
 app.listen(port, () => {
   connect();
