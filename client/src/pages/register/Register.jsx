@@ -1,16 +1,11 @@
-import React, { useState } from "react";
-
-// Material UI
+import { useState } from "react";
 import { Button, TextField } from "@mui/material";
-
-// CSS
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 import "./register.css";
 
-// React Router
-import { Link } from "react-router-dom";
-
 export const Register = () => {
-  // User State
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -19,28 +14,41 @@ export const Register = () => {
   const [profilePicture, setProfilePicture] = useState(null);
   const [bio, setBio] = useState("");
 
-  // Handle Submit
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== passwordAgain) {
-      alert("Passwords do not match");
+      alert("Passwords don't match!");
     } else {
       const user = {
         fullName,
         username,
         email,
         password,
-
         bio,
       };
+
       if (profilePicture) {
         const data = new FormData();
-        const filename = Date.now() + profilePicture.name;
-        data.append("name", filename);
+        const fileName = Date.now() + profilePicture.name;
+        data.append("name", fileName);
         data.append("file", profilePicture);
-        user.profilePicture = filename;
+        user.profilePicture = fileName;
         try {
-        } catch (err) {}
+          await axios.post("/upload", data);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      try {
+        const res = await axios.post("/auth/register", user);
+        if (res.status === 200) {
+          toast.success("Registration succesfull!");
+          navigate("/login");
+        }
+      } catch (err) {
+        console.log(err);
       }
     }
   };
@@ -53,6 +61,7 @@ export const Register = () => {
         <div className="form-input">
           <TextField
             required
+            type="text"
             label="Full Name"
             variant="outlined"
             onChange={(e) => setFullName(e.target.value)}
@@ -82,20 +91,25 @@ export const Register = () => {
             type="password"
             label="Password"
             variant="outlined"
-            onchange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="form-input">
           <TextField
             required
             type="password"
-            label="Password Again"
+            label="Password Confirm"
             variant="outlined"
             onChange={(e) => setPasswordAgain(e.target.value)}
           />
         </div>
         <div className="form-input">
-          <TextField required type="file" variant="outlined" />
+          <TextField
+            required
+            type="file"
+            variant="outlined"
+            onChange={(e) => setProfilePicture(e.target.files[0])}
+          />
         </div>
         <div className="form-input">
           <TextField
@@ -106,7 +120,7 @@ export const Register = () => {
             onChange={(e) => setBio(e.target.value)}
           />
         </div>
-        <Link to="/login" href="/" className="auth-link">
+        <Link to="/login" className="auth-link" href="/">
           Back to Login
         </Link>
         <Button type="submit" variant="contained" color="success">

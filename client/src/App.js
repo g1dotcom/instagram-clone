@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+// react toastify
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 //components and pages
 import { Header } from "./components/header/Header";
 import { Share } from "./components/share/Share";
@@ -20,6 +24,7 @@ function App() {
   return (
     <div className="App">
       <Share open={open} handleClose={handleClose} />
+      <ToastContainer />
       <Router>
         <Header handleOpen={handleOpen} />
         <Routes>
