@@ -4,6 +4,8 @@ const app = express();
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
+const multer = require("multer");
+const path = require("path");
 
 // Routes
 const authRoutes = require("./routes/auth.js");
@@ -26,8 +28,27 @@ const connect = async () => {
 };
 
 // Middleware
+app.use("/images", express.static(path.join(__dirname, "public/images")));
 app.use(express.json());
 app.use(morgan("common"));
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+app.post("/upload", upload.single("file"), (req, res) => {
+  try {
+    return res.status(200).json("File uploaded successfully");
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 // Routes
 app.use("/auth", authRoutes);
