@@ -1,16 +1,19 @@
 import React from "react";
 import "./header.css";
 
-//COMPONENTS IMPORT
-import { Logo } from "../Logo/Logo";
-import { Share } from "../share/Share";
+// React Router
+import { Link } from "react-router-dom";
 
-//ICONS IMPORT
+//COMPONENTS IMPORT
+import { Logo } from "../logo/Logo";
+
+//ICONS IMPORT MATERIAL UI
 import SearchIcon from "@mui/icons-material/Search";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import { Avatar } from "@mui/material";
+import { Box } from "@mui/system";
 
 export const Header = ({ handleOpen }) => {
   return (
@@ -18,28 +21,30 @@ export const Header = ({ handleOpen }) => {
       <div className="container">
         <div className="header">
           <Logo />
-          <Share />
-          <div className="search">
-            <SearchIcon className="search-icon" />
-            <input type="text" placeholder="Search" />
-          </div>
+          <Box>
+            <div className="search">
+              <SearchIcon className="search-icon" />
+              <input type="text" placeholder="Search" />
+            </div>
+          </Box>
+
           <div className="header-links">
-            <a href="/">
+            <Link to="/">
               <HomeOutlinedIcon className="icon" />
-            </a>
-            <a href="/">
+            </Link>
+            <Link to="/messenger">
               <ChatOutlinedIcon className="icon" />
-            </a>
+            </Link>
 
             <AddBoxOutlinedIcon className="icon" onClick={handleOpen} />
 
-            <a href="/">
+            <Link to="/profile/gokhansule1">
               <Avatar
                 alt="Remy Sharp"
                 src="https://avatars.githubusercontent.com/u/111647989?v=4"
                 sx={{ width: 28, height: 28 }}
               />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
