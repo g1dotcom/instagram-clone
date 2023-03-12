@@ -20,14 +20,18 @@ import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import { Avatar } from "@mui/material";
 import { Box } from "@mui/system";
+import ClickAwayListener from "@mui/base/ClickAwayListener";
 
 export const Header = ({ handleOpen }) => {
+  // useContext
   const { user: currentUser } = useContext(AuthContext);
 
+  // useState
   const [users, setUsers] = useState();
   const [search, setSearch] = useState("");
   const [userFilter, setUserFilter] = useState([]);
 
+  // Get User List
   useEffect(() => {
     const getUserList = async () => {
       const res = await axios.get("/users/list");
@@ -36,6 +40,7 @@ export const Header = ({ handleOpen }) => {
     getUserList();
   }, []);
 
+  // Search
   const handleSearch = (e) => {
     setSearch(e.target.value);
     setUserFilter(
@@ -44,47 +49,78 @@ export const Header = ({ handleOpen }) => {
     console.log(userFilter);
   };
 
+  // dotenv
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  // dopdown
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen((prev) => !prev);
+  };
+
+  const handleClickAway = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="header-wrapper">
       <div className="container">
         <div className="header">
           <Logo />
-          <Box sx={{ position: "relative" }}>
-            <div className="search">
-              <SearchIcon className="search-icon" />
-              <input type="text" placeholder="Search" onChange={handleSearch} />
-              <div className="search-result-wrapper">
-                <div className="search-result">
-                  <Link
-                    className="search-result-link"
-                    to="/profile/gokhansule1"
-                  >
-                    <Avatar
-                      sx={{ width: 28, height: 28 }}
-                      alt="Remy Sharp"
-                      src={
-                        currentUser.profilePicture &&
-                        PF + currentUser.profilePicture
-                      }
-                    />
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        lineHeight: "1",
-                        fontSize: "12",
-                      }}
-                    >
-                      <b>{currentUser.username}</b>
-                      <span>{currentUser.fullName}</span>
+          <ClickAwayListener onClickAway={handleClickAway}>
+            <Box sx={{ position: "relative" }}>
+              <div className="search">
+                <SearchIcon className="search-icon" />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  onChange={handleSearch}
+                  onClick={handleClick}
+                />
+                {open ? (
+                  <div className="search-result-wrapper">
+                    <div className="search-result">
+                      {userFilter.length > 0 ? (
+                        userFilter.slice(0, 3).map((user) => (
+                          <Link
+                            to={"/profile/" + user.username}
+                            className="search-result-link"
+                            key={user._id}
+                            onClick={() => setOpen(false)}
+                          >
+                            <Avatar
+                              src={
+                                user.profilePicture && PF + user.profilePicture
+                              }
+                              sx={{ width: 28, height: 28 }}
+                            />
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                lineHeight: "1",
+                                fontSize: "12px",
+                              }}
+                            >
+                              <b>{user.username}</b>
+                              <span>{user.fullName}</span>
+                            </div>
+                          </Link>
+                        ))
+                      ) : (
+                        <div className="search-resul-text">
+                          {search.length > 0
+                            ? "Aradığın kullanıcı bulunamadı."
+                            : "Kullanıcı Ara"}
+                        </div>
+                      )}
                     </div>
-                  </Link>
-                </div>
+                  </div>
+                ) : null}
               </div>
-            </div>
-          </Box>
-
+            </Box>
+          </ClickAwayListener>
           <div className="header-links">
             <Link to="/">
               <HomeOutlinedIcon className="icon" />
@@ -92,13 +128,17 @@ export const Header = ({ handleOpen }) => {
             <Link to="/messenger">
               <ChatOutlinedIcon className="icon" />
             </Link>
-
-            <AddBoxOutlinedIcon className="icon" onClick={handleOpen} />
-
-            <Link to="/profile/gokhansule1">
+            <AddBoxOutlinedIcon
+              className="icon"
+              style={{ cursor: "pointer" }}
+              onClick={handleOpen}
+            />
+            <Link to={"/profile/" + currentUser.username}>
               <Avatar
                 alt="Remy Sharp"
-                src="https://avatars.githubusercontent.com/u/111647989?v=4"
+                src={
+                  currentUser.profilePicture && PF + currentUser.profilePicture
+                }
                 sx={{ width: 28, height: 28 }}
               />
             </Link>
