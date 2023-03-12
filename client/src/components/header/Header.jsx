@@ -111,8 +111,8 @@ export const Header = ({ handleOpen }) => {
                       ) : (
                         <div className="search-resul-text">
                           {search.length > 0
-                            ? "Aradığın kullanıcı bulunamadı."
-                            : "Kullanıcı Ara"}
+                            ? "Search for people"
+                            : "No result found"}
                         </div>
                       )}
                     </div>
