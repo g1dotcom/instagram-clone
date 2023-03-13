@@ -37,6 +37,9 @@ export const Profile = () => {
   // usestate for posts
   const [posts, setPosts] = useState([]);
 
+  // PF = Public Folder
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
   // context
   const { user: currentUser } = useContext(AuthContext);
 
@@ -64,13 +67,13 @@ export const Profile = () => {
         <div className="profile-head">
           <div className="head-left">
             <Avatar
-              src="https://avatars.githubusercontent.com/u/111647989?v=4"
+              src={user.profilePicture && PF + user.profilePicture}
               sx={{ width: 150, height: 150 }}
             />
           </div>
           <div className="head-right">
             <div className="head-right-top">
-              <span className="profile-page-username">gokhansule1</span>
+              <span className="profile-page-username">{user.username}</span>
               <div className="profile-page-buttons">
                 <Button
                   className="profile-page-buttons"
@@ -134,6 +137,7 @@ export const Profile = () => {
                 <Post post={post} />;
                 <div className="like-icon-wrapper">
                   <FavoriteIcon className="like-icon" />
+                  {post.likes && post.likes.length}
                   <b>1</b>
                 </div>
               </div>
