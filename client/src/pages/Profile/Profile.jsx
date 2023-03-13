@@ -94,21 +94,21 @@ export const Profile = () => {
             </div>
             <div className="head-right-center">
               <div className="post-count">
-                <b>1</b>
+                <b>{posts.length}</b>
                 <span>posts</span>
               </div>
               <div className="follower-count">
-                <b>1</b>
+                <b>{user.followers && user.followers.length}</b>
                 <span>followers</span>
               </div>
               <div className="following-count">
-                <b>1</b>
+                <b>{user.followings && user.followings.length}</b>
                 <span>followings</span>
               </div>
             </div>
             <div className="head-right-bottom">
-              <b>Gokhan Sule</b>
-              <span>Full-Stack Web Dev.</span>
+              <b>{user.fullName}</b>
+              <span>{user.bio && user.bio}</span>
             </div>
           </div>
         </div>
