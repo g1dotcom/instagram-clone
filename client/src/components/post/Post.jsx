@@ -1,5 +1,6 @@
 // hooks , react  and react-router-dom
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+// react-router-dom
 import { Link } from "react-router-dom";
 
 // Material UI
@@ -18,8 +19,19 @@ import "./post.css";
 // Axios
 import axios from "axios";
 
+// Context
+import { AuthContext } from "../../context/AuthContext";
+
 export const Post = ({ top, bottom, post }) => {
+  // usestate for user
   const [user, setUser] = useState([]);
+
+  // context
+  const { user: currentUser } = useContext(AuthContext);
+
+  // usestate for likes
+  const [like, setLike] = useState(post.likes.length);
+  const [isLiked, setIsLiked] = useState(false);
 
   // PF = Public Folder
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -27,6 +39,7 @@ export const Post = ({ top, bottom, post }) => {
   //react-timeago
   const formatter = buildFormatter(turkishStrings);
 
+  // useEffect for user&post
   useEffect(() => {
     const getUser = async () => {
       const res = await axios.get("/users?userId=" + post.userId);
@@ -34,6 +47,24 @@ export const Post = ({ top, bottom, post }) => {
     };
     getUser();
   }, [post.userId]);
+
+  // useEffect for likes
+  useEffect(() => {
+    setIsLiked(post.likes.includes(currentUser._id));
+  }, [currentUser._id, post.likes]);
+
+  // like handler
+  const likeHandler = async () => {
+    try {
+      await axios.put("/posts/" + post._id + "/like", {
+        userId: currentUser._id,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    setLike(isLiked ? like - 1 : like + 1);
+    setIsLiked(!isLiked);
+  };
 
   console.log(user);
 
@@ -65,13 +96,15 @@ export const Post = ({ top, bottom, post }) => {
       {bottom && (
         <div className="post-bottom">
           <div className="post-like">
-            <button>
-              <FavoriteIcon className="post-like-icon active" />
+            <button onClick={likeHandler}>
+              <FavoriteIcon
+                className={`post-like-icon ${isLiked && "active"}`}
+              />
             </button>
           </div>
           <span className="post-like-count">
-            {post.likes.length}
-            {post.likes.length > 1 ? "likes" : "like"}
+            {like} {""}
+            {like > 1 ? "likes" : "like"}
           </span>
           <div className="post-content">
             <Link to={"/profile/" + user.username} className="profile-username">
