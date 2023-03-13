@@ -41,7 +41,7 @@ export const Profile = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   // context
-  const { user: currentUser } = useContext(AuthContext);
+  const { user: currentUser, dispatch } = useContext(AuthContext);
 
   // axios get request for user
   useEffect(() => {
@@ -61,6 +61,13 @@ export const Profile = () => {
     getPosts();
   }, [username]);
 
+  // handle logout
+  const handleOutClick = () => {
+    if (window.confirm("Are you sure  want to logout?")) {
+      dispatch({ type: "LOGOUT" });
+    }
+  };
+
   return (
     <div className="container">
       <div className="profile-page">
@@ -75,21 +82,26 @@ export const Profile = () => {
             <div className="head-right-top">
               <span className="profile-page-username">{user.username}</span>
               <div className="profile-page-buttons">
-                <Button
-                  className="profile-page-buttons"
-                  variant="contained"
-                  size="small"
-                >
-                  Düzenle
-                </Button>
-                <button>
-                  {" "}
-                  <SettingsOutlinedIcon />{" "}
-                </button>
-                <button>
-                  {" "}
-                  <LogoutOutlinedIcon color="error" />{" "}
-                </button>
+                {user._id === currentUser._id && (
+                  <Button
+                    className="profile-page-buttons"
+                    variant="contained"
+                    size="small"
+                  >
+                    Düzenle
+                  </Button>
+                )}
+                {user._id === currentUser._id && (
+                  <button>
+                    <SettingsOutlinedIcon />{" "}
+                  </button>
+                )}
+                {user._id === currentUser._id && (
+                  <button onClick={handleOutClick}>
+                    {" "}
+                    <LogoutOutlinedIcon color="error" />{" "}
+                  </button>
+                )}
               </div>
             </div>
             <div className="head-right-center">
