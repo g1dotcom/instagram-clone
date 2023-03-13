@@ -4,9 +4,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 // Material UI
-import { Avatar } from "@mui/material";
+import { Avatar, IconButton } from "@mui/material";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import DeleteIcon from "@mui/icons-material/Delete";
+// material-ui menu
+
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 //react-timeago
 import TimeAgo from "react-timeago";
@@ -19,12 +24,27 @@ import "./post.css";
 // Axios
 import axios from "axios";
 
+// Toastify
+import { toast } from "react-toastify";
+
 // Context
 import { AuthContext } from "../../context/AuthContext";
 
+///////////// Main Component //////////////////
+//////////////////////////////////////////////
 export const Post = ({ top, bottom, post }) => {
   // usestate for user
   const [user, setUser] = useState([]);
+
+  // material-ui menu
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   // context
   const { user: currentUser } = useContext(AuthContext);
@@ -66,6 +86,27 @@ export const Post = ({ top, bottom, post }) => {
     setIsLiked(!isLiked);
   };
 
+  // delete handler
+  const deleteHandler = async () => {
+    try {
+      if (window.confirm("Are you sure?")) {
+        const res = await axios.delete("/posts/" + post._id, {
+          data: {
+            userId: currentUser._id,
+          },
+        });
+        if (res.status === 200) {
+          toast.success(res.data);
+          window.location.reload();
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setLike(isLiked ? like - 1 : like + 1);
+    setIsLiked(!isLiked);
+  };
+
   console.log(user);
 
   return (
@@ -83,10 +124,18 @@ export const Post = ({ top, bottom, post }) => {
               {user.username}
             </Link>
           </div>
+
           <div className="post-header-right">
-            <button>
+            <button onClick={handleClick}>
               <MoreHorizOutlinedIcon />
             </button>
+            <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+              <MenuItem onClick={handleClose}>
+                <IconButton color="error" onClick={deleteHandler}>
+                  <DeleteIcon fontSize="inherit" />
+                </IconButton>
+              </MenuItem>
+            </Menu>
           </div>
         </div>
       )}
